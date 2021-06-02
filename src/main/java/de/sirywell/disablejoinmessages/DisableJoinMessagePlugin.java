@@ -8,26 +8,18 @@ import org.bukkit.plugin.java.JavaPlugin;
 
 public class DisableJoinMessagePlugin extends JavaPlugin implements Listener {
 
-    private boolean bypass;
-
     @Override
     public void onEnable() {
-        saveDefaultConfig();
-        this.bypass = getConfig().getBoolean("enable-bypass-perms");
         getServer().getPluginManager().registerEvents(this, this);
     }
 
     @EventHandler
     public void onJoin(PlayerJoinEvent event) {
-        if (!this.bypass || !event.getPlayer().hasPermission("disablejoinmessages.join.bypass")) {
-            event.joinMessage(null);
-        }
+        event.joinMessage(null);
     }
 
     @EventHandler
     public void onLeave(PlayerQuitEvent event) {
-        if (!this.bypass || !event.getPlayer().hasPermission("disablejoinmessages.leave.bypass")) {
-            event.quitMessage(null);
-        }
+        event.quitMessage(null);
     }
 }
